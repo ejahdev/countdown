@@ -7,11 +7,11 @@ function updateTimer() {
     let minutesRemaining;
     let secondsRemaining;
 
-    if (minutes < 20) {
-        minutesRemaining = 20 - minutes;
+    if (minutes === 20) {
+        minutesRemaining = 19 - minutes;
         secondsRemaining = 60 - seconds;
     } else {
-        minutesRemaining = 80 - minutes; // 60 (full hour) + 20 - minutes
+        minutesRemaining = 79 - minutes; // 60 (full hour) + 20 - minutes
         secondsRemaining = 60 - seconds;
     }
 
@@ -27,15 +27,18 @@ function updateTimer() {
 
     if (minutesRemaining > 1) {
         countdownText = `<span id="minutes" class="orange">${minutesRemaining}</span> <span class="yellow-green">${minuteLabel}</span> <span id="seconds" class="orange">${secondsRemaining}</span> <span class="yellow-green">${secondLabel} left!</span>`;
+    } else if (minutesRemaining === 1 && secondsRemaining === 60) {
+        countdownText = "Happy 20!!!";
+        document.getElementById('countdown').classList.remove('zooming');
     } else if (minutesRemaining === 1) {
         countdownText = `<span id="seconds" class="orange">${secondsRemaining}</span> <span class="yellow-green">${secondLabel} left!</span>`;
         if (secondsRemaining === 60) {
-            document.getElementById('countdown').classList.add('zooming');
+            document.getElementById('countdown').style.animation = 'zoom 4s ease-in-out infinite';
         } else {
-            document.getElementById('countdown').classList.remove('zooming');
+            document.getElementById('countdown').style.animation = 'none';
         }
     } else {
-        countdownText = "Next 20 is here!";
+        countdownText = "Happy 20!!!";
     }
 
     // Update the elements by their IDs
@@ -49,3 +52,6 @@ setInterval(updateTimer, 1000);
 
 // Initial call to set the timer when the page loads
 updateTimer();
+
+// Synchronize the timer with the current time immediately upon loading
+setInterval(updateTimer, 1000);

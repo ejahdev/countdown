@@ -34,5 +34,5 @@ body {
 }
 
 .zooming {
-    animation: zoom 1s infinite;
+    animation: zoom 1s ease-in-out infinite;
 }
