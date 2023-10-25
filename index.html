@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Cool Countdown Timer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=B612+Mono:wght@700&display=swap" rel="stylesheet">
+
+    <title>Countdown Timer</title>
 </head>
 <body>
     <div class="center">
-        <div class="timer">
-            <span class="orange" id="minutes">00</span> minutes <span id="seconds" class="orange">00</span> seconds till the next 20!
+        <div class="timer" id="countdown">
+            <span id="minutes" class="orange"></span>
+            <span class="yellow-green"> minutes </span>
+            <span id="seconds" class="orange"></span>
+            <span class="yellow-green"> seconds till the next 20!</span>
         </div>
     </div>
     <script src="script.js"></script>

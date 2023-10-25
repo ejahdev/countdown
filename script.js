@@ -15,23 +15,23 @@ function updateTimer() {
         secondsRemaining = 60 - seconds;
     }
 
-    // Construct the countdown message
+    // Determine whether to show "minute" or "minutes"
+    const minuteLabel = minutesRemaining === 1 ? "minute" : "minutes";
+
+    // Determine whether to show "second" or "seconds"
+    const secondLabel = secondsRemaining === 1 ? "second" : "seconds";
+
+    // Apply the purple color to the countdown numbers
+    const purple = "#9147FF";
     let countdownText;
-    
-    if (minutesRemaining > 0) {
-        countdownText = `${minutesRemaining} ${minutesRemaining === 1 ? 'minute' : 'minutes'}`;
-        if (secondsRemaining > 0) {
-            countdownText += ` and ${secondsRemaining} ${secondsRemaining === 1 ? 'second' : 'seconds'}`;
-        }
-        countdownText += " left till the next 20";
-    } else if (secondsRemaining > 0) {
-        countdownText = `${secondsRemaining} ${secondsRemaining === 1 ? 'second' : 'seconds'} left till the next 20`;
-        
+
+    if (minutesRemaining > 1) {
+        countdownText = `<span id="minutes" class="orange">${minutesRemaining}</span> <span class="yellow-green">${minuteLabel}</span> <span id="seconds" class="orange">${secondsRemaining}</span> <span class="yellow-green">${secondLabel} left!</span>`;
+    } else if (minutesRemaining === 1) {
+        countdownText = `<span id="seconds" class="orange">${secondsRemaining}</span> <span class="yellow-green">${secondLabel} left!</span>`;
         if (secondsRemaining === 60) {
-            // Apply the zooming animation when there are 60 seconds left
             document.getElementById('countdown').classList.add('zooming');
         } else {
-            // Remove the animation when it's not 60 seconds
             document.getElementById('countdown').classList.remove('zooming');
         }
     } else {
@@ -39,10 +39,9 @@ function updateTimer() {
     }
 
     // Update the elements by their IDs
-    document.getElementById('minutes').textContent = minutesRemaining > 0 ? minutesRemaining : '';
-    document.getElementById('seconds').textContent = secondsRemaining > 0 ? secondsRemaining : '';
-
-    document.getElementById('countdown').textContent = countdownText;
+    document.getElementById('countdown').innerHTML = countdownText;
+    document.getElementById('minutes').style.color = purple;
+    document.getElementById('seconds').style.color = purple;
 }
 
 // Call updateTimer every second
