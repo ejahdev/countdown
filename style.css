@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: 'Bangers', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.timer {
+    font-size: 48px;
+    font-weight: bold;
+    color: #A7E10D; /* Yellow-Green color for the main message */
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 4px 4px 0 #000; /* Thick black stroke */
+}
+
+.orange {
+    color: #580ce4; /* Orange color for both minutes and seconds */
+}
+
+@keyframes zoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.zooming {
+    animation: zoom 1s infinite;
+}
