@@ -15,19 +15,17 @@ function updateTimer() {
         secondsRemaining = 60 - seconds;
     }
 
-    // Determine whether to show "minute" or "minutes"
-    const minuteLabel = minutesRemaining === 1 ? "minute" : "minutes";
-    
-    // Determine whether to show "second" or "seconds"
-    const secondLabel = secondsRemaining === 1 ? "second" : "seconds";
-
     // Construct the countdown message
     let countdownText;
     
     if (minutesRemaining > 0) {
-        countdownText = `${minutesRemaining} ${minuteLabel} ${secondsRemaining} ${secondLabel} left till the next 20`;
+        countdownText = `${minutesRemaining} ${minutesRemaining === 1 ? 'minute' : 'minutes'}`;
+        if (secondsRemaining > 0) {
+            countdownText += ` and ${secondsRemaining} ${secondsRemaining === 1 ? 'second' : 'seconds'}`;
+        }
+        countdownText += " left till the next 20";
     } else if (secondsRemaining > 0) {
-        countdownText = `${secondsRemaining} ${secondLabel} left till the next 20`;
+        countdownText = `${secondsRemaining} ${secondsRemaining === 1 ? 'second' : 'seconds'} left till the next 20`;
         
         if (secondsRemaining === 60) {
             // Apply the zooming animation when there are 60 seconds left
