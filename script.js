@@ -1,50 +1,64 @@
 function updateTimer() {
     const now = new Date();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+    const currentHour = now.getHours();
+    const currentMinutes = now.getMinutes();
+    const currentSeconds = now.getSeconds();
 
-    // Calculate minutes and seconds remaining until the next :20 past the hour
-    let minutesRemaining;
-    let secondsRemaining;
+    // Set the target hour and minute for West Coast 4:20 (16:20)
+    const targetHour = 16; // 4 PM
+    const targetMinute = 20;
 
-    if (minutes === 20) {
-        minutesRemaining = 19 - minutes;
-        secondsRemaining = 60 - seconds;
+    // Calculate the time difference in hours, minutes, and seconds
+    let hoursRemaining, minutesRemaining, secondsRemaining;
+
+    if (currentHour > targetHour || (currentHour === targetHour && currentMinutes > targetMinute)) {
+        // If the current time has already passed 4:20 PM, calculate the time until the next day's 4:20 PM
+        const tomorrow = new Date(now);
+        tomorrow.setDate(now.getDate() + 1);
+        tomorrow.setHours(targetHour, targetMinute, 0, 0);
+
+        const timeDiff = tomorrow - now;
+        hoursRemaining = Math.floor(timeDiff / 3600000);
+        minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
+        secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
     } else {
-        minutesRemaining = 79 - minutes; // 60 (full hour) + 20 - minutes
-        secondsRemaining = 60 - seconds;
+        // Calculate the time until today's 4:20 PM
+        const targetTime = new Date(now);
+        targetTime.setHours(targetHour, targetMinute, 0, 0);
+
+        const timeDiff = targetTime - now;
+        hoursRemaining = Math.floor(timeDiff / 3600000);
+        minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
+        secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
     }
-
-    // Determine whether to show "minute" or "minutes"
-    const minuteLabel = minutesRemaining === 1 ? "minute" : "minutes";
-
-    // Determine whether to show "second" or "seconds"
-    const secondLabel = secondsRemaining === 1 ? "second" : "seconds";
 
     // Apply the purple color to the countdown numbers
-    const purple = "#9147FF";
-    let countdownText;
+    const purple = "#6441A5";
+    const yellowGreen = "#A7E10D";
 
-    if (minutesRemaining > 1) {
-        countdownText = `<span id="minutes" class="orange">${minutesRemaining}</span> <span class="yellow-green">${minuteLabel}</span> <span id="seconds" class="orange">${secondsRemaining}</span> <span class="yellow-green">${secondLabel} left!</span>`;
-    } else if (minutesRemaining === 1 && secondsRemaining === 60) {
-        countdownText = "Happy 20!!!";
-        document.getElementById('countdown').classList.remove('zooming');
-    } else if (minutesRemaining === 1) {
-        countdownText = `<span id="seconds" class="orange">${secondsRemaining}</span> <span class="yellow-green">${secondLabel} left!</span>`;
-        if (secondsRemaining === 60) {
-            document.getElementById('countdown').style.animation = 'zoom 4s ease-in-out infinite';
-        } else {
-            document.getElementById('countdown').style.animation = 'none';
+    let countdownText = '';
+
+    if (hoursRemaining > 0) {
+        countdownText += `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's' : ''}`;
+        if (minutesRemaining > 0 || secondsRemaining > 0) {
+            countdownText += ' ';
         }
-    } else {
-        countdownText = "Happy 20!!!";
     }
 
-    // Update the elements by their IDs
+    if (minutesRemaining > 0) {
+        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's' : ''}`;
+        if (hoursRemaining > 0 && secondsRemaining > 0) {
+            countdownText += ' ';
+        }
+    }
+
+    if (secondsRemaining > 0) {
+        countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's' : ''}`;
+    }
+
+    countdownText += `<br> till West Coast 4:20!`;
+
     document.getElementById('countdown').innerHTML = countdownText;
-    document.getElementById('minutes').style.color = purple;
-    document.getElementById('seconds').style.color = purple;
 }
 
 // Call updateTimer every second
@@ -52,6 +66,3 @@ setInterval(updateTimer, 1000);
 
 // Initial call to set the timer when the page loads
 updateTimer();
-
-// Synchronize the timer with the current time immediately upon loading
-setInterval(updateTimer, 1000);
