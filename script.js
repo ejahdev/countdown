@@ -18,13 +18,15 @@ function updateTimer() {
     // Determine whether to show "minute" or "minutes"
     const minuteLabel = minutesRemaining === 1 ? "minute" : "minutes";
     
+    // Determine whether to show "second" or "seconds"
+    const secondLabel = secondsRemaining === 1 ? "second" : "seconds";
+
     // Construct the countdown message
     let countdownText;
     
     if (minutesRemaining > 0) {
-        countdownText = `${minutesRemaining} ${minuteLabel} ${secondsRemaining} seconds left till the next 20`;
+        countdownText = `${minutesRemaining} ${minuteLabel} ${secondsRemaining} ${secondLabel} left till the next 20`;
     } else if (secondsRemaining > 0) {
-        const secondLabel = secondsRemaining === 1 ? "second" : "seconds";
         countdownText = `${secondsRemaining} ${secondLabel} left till the next 20`;
         
         if (secondsRemaining === 60) {
