@@ -54,7 +54,7 @@ function updateTimer() {
 
     countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's ' : ' '}`;
 
-    countdownText += `<br> till West Coast 4:20!`;
+    countdownText += `<br> till West Coast <span class="time-text">4:20</span>!`;
 
     if (currentHour === targetHour && currentMinutes === targetMinute) {
         countdownText = `CHEERS Happy 4:20!!`;
