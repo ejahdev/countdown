@@ -19,7 +19,7 @@ body {
     font-size: 80px;
     font-weight: bold;
     color: #A7E10D; /* Yellow-Green color for the main message */
-    -webkit-text-stroke: 2px rgb(255, 255, 255);
+    -webkit-text-stroke: 2px rgb(0, 0, 0)
     text-align: center;
 }
 
