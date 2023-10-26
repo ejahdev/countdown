@@ -6,7 +6,7 @@ function updateTimer() {
 
     // Set the target hour and minute for West Coast 4:20 (16:20)
     const targetHour = 16; // 4 PM
-    const targetMinute = 20;
+    const targetMinute = 30;
 
     // Calculate the time difference in hours, minutes, and seconds
     let hoursRemaining, minutesRemaining, secondsRemaining;
@@ -39,24 +39,26 @@ function updateTimer() {
     let countdownText = '';
 
     if (hoursRemaining > 0) {
-        countdownText += `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's' : ''}`;
+        countdownText += `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}`;
         if (minutesRemaining > 0 || secondsRemaining > 0) {
             countdownText += ' ';
         }
     }
 
     if (minutesRemaining > 0) {
-        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's ' : ''}`;
+        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's ' : ' '}`;
         if (hoursRemaining > 0 && secondsRemaining > 0) {
             countdownText += ' ';
         }
     }
 
-    if (secondsRemaining > 0) {
-        countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's' : ''}`;
-    }
+    countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's ' : ' '}`;
 
     countdownText += `<br> till West Coast 4:20!`;
+
+    if (currentHour === targetHour && currentMinutes === targetMinute) {
+        countdownText = `CHEERS Happy 4:20!!`;
+    }
 
     document.getElementById('countdown').innerHTML = countdownText;
 }
