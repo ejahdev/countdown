@@ -46,7 +46,7 @@ function updateTimer() {
     }
 
     if (minutesRemaining > 0) {
-        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's' : ''}`;
+        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's ' : ''}`;
         if (hoursRemaining > 0 && secondsRemaining > 0) {
             countdownText += ' ';
         }
