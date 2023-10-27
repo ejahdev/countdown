@@ -46,13 +46,13 @@ function updateTimer() {
     }
 
     if (minutesRemaining > 0) {
-        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's ' : ' '}`;
+        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining === 1 ? ' ' : 's '}`;
         if (hoursRemaining > 0 && secondsRemaining > 0) {
             countdownText += ' ';
         }
     }
 
-    countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's ' : ' '}`;
+    countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}`;
 
     countdownText += `<br> till West Coast <span class="time-text">4:20</span>!`;
 
