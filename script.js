@@ -4,27 +4,25 @@ function updateTimer() {
     const currentMinutes = now.getMinutes();
     const currentSeconds = now.getSeconds();
 
-    // Set the target hour and minute for West Coast 4:20 (16:20)
-    const targetHour = 16; // 4 PM
+    // Set the target minute for 4:20
     const targetMinute = 20;
 
     // Calculate the time difference in hours, minutes, and seconds
     let hoursRemaining, minutesRemaining, secondsRemaining;
 
-    if (currentHour > targetHour || (currentHour === targetHour && currentMinutes > targetMinute)) {
-        // If the current time has already passed 4:20 PM, calculate the time until the next day's 4:20 PM
-        const tomorrow = new Date(now);
-        tomorrow.setDate(now.getDate() + 1);
-        tomorrow.setHours(targetHour, targetMinute, 0, 0);
+    if (currentHour > 4 || (currentHour === 4 && currentMinutes > targetMinute)) {
+        // If the current time has already passed 4:20 AM, calculate the time until 4:20 PM
+        const targetTime = new Date(now);
+        targetTime.setHours(16, targetMinute, 0, 0);
 
-        const timeDiff = tomorrow - now;
+        const timeDiff = targetTime - now;
         hoursRemaining = Math.floor(timeDiff / 3600000);
         minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
         secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
     } else {
-        // Calculate the time until today's 4:20 PM
+        // Calculate the time until 4:20 AM
         const targetTime = new Date(now);
-        targetTime.setHours(targetHour, targetMinute, 0, 0);
+        targetTime.setHours(4, targetMinute, 0, 0);
 
         const timeDiff = targetTime - now;
         hoursRemaining = Math.floor(timeDiff / 3600000);
@@ -52,11 +50,11 @@ function updateTimer() {
         }
     }
 
-    countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}`;
+    countdownText += `<span id="seconds" class "countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}`;
 
     countdownText += `<br> till West Coast <span class="time-text">4:20</span>!`;
 
-    if (currentHour === targetHour && currentMinutes === targetMinute) {
+    if (currentHour === 4 && currentMinutes === targetMinute) {
         countdownText = `CHEERS Happy 4:20!!`;
     }
 
