@@ -22,7 +22,7 @@ function updateTimer() {
 
     let hoursRemaining = targetHour - currentHour;
     let minutesRemaining = currentMinutes > targetMinute
-        ? 60 - currentMinutes + targetMinute
+        ? 60 - currentMinutes + targetMinute - 1
         : targetMinute - currentMinutes - 1;
     let secondsRemaining = 60 - currentSeconds;
 
