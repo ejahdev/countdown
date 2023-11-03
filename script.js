@@ -34,7 +34,7 @@ function updateTimer() {
         countdownText = `<span class="time-text">CHEERS Happy 4:20 ${message}</span>`;
     }
 
-    document.getElementById('countdown').innerHTML = countdownText + `<br>till West Coast <span class="time-text">4:20</span> ${message}!`;
+    document.getElementById('countdown').innerHTML = countdownText + `<br>Until West Coast <span class="time-text">4:20</span> ${message}!`;
 }
 
 // Call updateTimer every second
