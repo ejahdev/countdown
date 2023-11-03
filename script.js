@@ -19,7 +19,7 @@ function updateTimer() {
         hoursRemaining = Math.floor(timeDiff / 3600000);
         minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
         secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
-    } else {
+    } else if (currentHour < 4 || (currentHour === 4 && currentMinutes < targetMinute)) {
         // Calculate the time until 4:20 AM
         const targetTime = new Date(now);
         targetTime.setHours(4, targetMinute, 0, 0);
@@ -28,6 +28,11 @@ function updateTimer() {
         hoursRemaining = Math.floor(timeDiff / 3600000);
         minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
         secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
+    } else {
+        // It's currently 4:20 AM, set the countdown to 0
+        hoursRemaining = 0;
+        minutesRemaining = 0;
+        secondsRemaining = 0;
     }
 
     // Apply the purple color to the countdown numbers
@@ -35,25 +40,19 @@ function updateTimer() {
 
     let countdownText = '';
 
-    if (hoursRemaining > 0 || minutesRemaining > 0) {
-        countdownText += `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}`;
+    if (hoursRemaining > 0 || minutesRemaining > 0 || secondsRemaining > 0) {
+        if (hoursRemaining > 0) {
+            countdownText += `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}`;
+        }
         if (minutesRemaining > 0) {
             countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's ' : ' '}`;
         }
-        countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's ' : ' '}`;
+        if (secondsRemaining > 0) {
+            countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's ' : ' '}`;
+        }
         countdownText += `<br> till West Coast <span class="time-text">4:20</span>!`;
     } else if (currentHour === 4 && currentMinutes === 20) {
         countdownText = `CHEERS Happy 4:20!!`;
-    } else {
-        // If it's currently 4:20 AM, set the countdown to 12 hours until 4:20 PM
-        const timeDiff = (16 - currentHour) * 3600000 - currentMinutes * 60000 - currentSeconds * 1000;
-        hoursRemaining = 12;
-        minutesRemaining = Math.floor(timeDiff / 60000);
-        secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
-        countdownText = `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}`;
-        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining > 1 ? 's ' : ' '}`;
-        countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining > 1 ? 's ' : ' '}`;
-        countdownText += `<br> till West Coast <span class="time-text">4:20</span>!`;
     }
 
     document.getElementById('countdown').innerHTML = countdownText;
