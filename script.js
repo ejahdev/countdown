@@ -5,7 +5,7 @@ function updateTimer() {
     const currentSeconds = now.getSeconds();
 
     // Set the target hour and minute for West Coast 4:20 (16:20)
-    const targetHour = 16; // 4 PM
+    const targetHour = 16 && 4; // 4 PM
     const targetMinute = 20;
 
     // Calculate the time difference in hours, minutes, and seconds
