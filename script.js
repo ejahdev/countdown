@@ -21,14 +21,21 @@ function updateTimer() {
     }
 
     let hoursRemaining = targetHour - currentHour;
-    let minutesRemaining = currentMinutes > targetMinute ? 60 - currentMinutes + targetMinute : targetMinute - currentMinutes;
-    let secondsRemaining = 59 - currentSeconds;
+    let minutesRemaining = currentMinutes > targetMinute
+        ? 60 - currentMinutes + targetMinute
+        : targetMinute - currentMinutes;
+    let secondsRemaining = 60 - currentSeconds;
+
+    if (minutesRemaining === 60) {
+        minutesRemaining = 0;
+        hoursRemaining -= 1;
+    }
 
     if (hoursRemaining < 0) {
         hoursRemaining += 24;
     }
 
-    const countdownText = `${hoursRemaining > 0 ? `<span id="hours" class="countdown-num">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}` : ''}${minutesRemaining > 0 ? `<span id="minutes" class="countdown-num">${minutesRemaining}</span> minute${minutesRemaining === 1 ? ' ' : 's '}` : ''}<span id="seconds" class="countdown-num">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}`;
+    let countdownText = `${hoursRemaining > 0 ? `<span id="hours" class="countdown-num">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}` : ''}${minutesRemaining > 0 ? `<span id="minutes" class="countdown-num">${minutesRemaining}</span> minute${minutesRemaining === 1 ? ' ' : 's '}` : ''}<span id="seconds" class="countdown-num">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}`;
 
     if (currentHour === targetHour && currentMinutes === targetMinute) {
         countdownText = `<span class="time-text">CHEERS Happy 4:20 ${message}</span>`;
