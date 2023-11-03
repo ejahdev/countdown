@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4:20 Countdown</title>
+  <style>
+    body {
+      font-family: "B612 Mono", monospace;
+      text-align: center;
+      background: transparent;
+      color: yellowgreen;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #countdown {
+      font-size: 28px; /* Increase font size */
+      text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; /* Add black stroke */
+    }
+
+    .purple {
+      color: #6441A4; /* Twitch purple color */
+    }
+
+    .green {
+      color: #008000; /* Marijuana green color */
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown"></div>
+
+  <script>
+    function updateCountdown() {
+      const now = new Date();
+      const target = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+
+      if (currentHour > 4 || (currentHour === 4 && currentMinute >= 21)) {
+        // If it's already past 4:21, calculate the time for the next day
+        target.setDate(now.getDate() + 1);
+      }
+
+      target.setHours(4, 20, 0, 0);
+
+      const timeDifference = target - now;
+
+      if (timeDifference <= 0) {
+        document.getElementById("countdown").innerHTML = "Cheers Happy 4:20!";
+      } else {
+        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        let countdownText = "";
+
+        if (hours > 0) {
+          countdownText += `<span class="purple">${hours}</span> Hour${hours === 1 ? "" : "s"}`;
+        }
+        if (minutes > 0) {
+          if (countdownText !== "") {
+            countdownText += " ";
+          }
+          countdownText += `<span class="purple">${minutes}</span> Minute${minutes === 1 ? "" : "s"}`;
+        }
+        if (hours > 0 || minutes > 0) {
+          if (countdownText !== "") {
+            countdownText += " ";
+          }
+          countdownText += `<span class="purple">${seconds}</span> Second${seconds === 1 ? "" : "s"}`;
+        }
+
+        const ampm = currentHour < 12 ? "AM" : "PM";
+        countdownText += ` <br>until west coast <span class='green'>4:20</span> ${ampm}!!`;
+        document.getElementById("countdown").innerHTML = countdownText;
+
+        setTimeout(updateCountdown, 1000);
+      }
+    }
+
+    updateCountdown();
+  </script>
+</body>
+</html>
