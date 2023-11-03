@@ -4,57 +4,32 @@ function updateTimer() {
     const currentMinutes = now.getMinutes();
     const currentSeconds = now.getSeconds();
 
-    // Set the target hour and minute for West Coast 4:20 (16:20)
-    const targetHour = [16, 4]; // 4 PM and 4 AM
+    // Set the target hours for 4:20 AM and 4:20 PM
+    const targetHourAM = 4;
+    const targetHourPM = 16;
     const targetMinute = 20;
 
-    // Calculate the time difference in hours, minutes, and seconds
-    let hoursRemaining, minutesRemaining, secondsRemaining;
+    // Calculate the time until the next 4:20
+    let targetHour, message;
 
-    if (currentHour > targetHour || (currentHour === targetHour && currentMinutes > targetMinute)) {
-        // If the current time has already passed 4:20 PM, calculate the time until the next day's 4:20 PM
-        const tomorrow = new Date(now);
-        tomorrow.setDate(now.getDate() + 1);
-        tomorrow.setHours(targetHour, targetMinute, 0, 0);
-
-        const timeDiff = tomorrow - now;
-        hoursRemaining = Math.floor(timeDiff / 3600000);
-        minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
-        secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
+    if (currentHour > targetHourPM || (currentHour === targetHourPM && currentMinutes > targetMinute)) {
+        targetHour = targetHourAM;
+        message = `till 4:20 AM!`;
+    } else if (currentHour < targetHourAM || (currentHour === targetHourAM && currentMinutes <= targetMinute)) {
+        targetHour = targetHourAM;
+        message = `till 4:20 AM!`;
     } else {
-        // Calculate the time until today's 4:20 PM
-        const targetTime = new Date(now);
-        targetTime.setHours(targetHour, targetMinute, 0, 0);
-
-        const timeDiff = targetTime - now;
-        hoursRemaining = Math.floor(timeDiff / 3600000);
-        minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
-        secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
+        targetHour = targetHourPM;
+        message = `till 4:20 PM!`;
     }
 
-    // Apply the purple color to the countdown numbers
-    const purple = "#6441A5";
-    const yellowGreen = "#A7E10D";
+    const timeDiff = (targetHour - currentHour) * 3600000 + (targetMinute - currentMinutes) * 60000 - currentSeconds * 1000;
 
-    let countdownText = '';
+    const hoursRemaining = Math.floor(timeDiff / 3600000);
+    const minutesRemaining = Math.floor((timeDiff % 3600000) / 60000);
+    const secondsRemaining = Math.floor((timeDiff % 60000) / 1000);
 
-    if (hoursRemaining > 0) {
-        countdownText += `<span id="hours" class="countdown-num" style="color: ${purple}">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}`;
-        if (minutesRemaining > 0 || secondsRemaining > 0) {
-            countdownText += ' ';
-        }
-    }
-
-    if (minutesRemaining > 0) {
-        countdownText += `<span id="minutes" class="countdown-num" style="color: ${purple}">${minutesRemaining}</span> minute${minutesRemaining === 1 ? ' ' : 's '}`;
-        if (hoursRemaining > 0 && secondsRemaining > 0) {
-            countdownText += ' ';
-        }
-    }
-
-    countdownText += `<span id="seconds" class="countdown-num" style="color: ${purple}">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}`;
-
-    countdownText += `<br> till West Coast <span class="time-text">4:20</span>!`;
+    const countdownText = `${hoursRemaining > 0 ? `<span id="hours" class="countdown-num" style="color: #6441A5">${hoursRemaining}</span> hour${hoursRemaining > 1 ? 's ' : ' '}` : ''}${minutesRemaining > 0 ? `<span id="minutes" class="countdown-num" style="color: #6441A5">${minutesRemaining}</span> minute${minutesRemaining === 1 ? ' ' : 's '}` : ''}<span id="seconds" class="countdown-num" style="color: #6441A5">${secondsRemaining}</span> second${secondsRemaining === 1 ? ' ' : 's '}<br> till West Coast <span class="time-text">4:20</span>!`;
 
     if (currentHour === targetHour && currentMinutes === targetMinute) {
         countdownText = `CHEERS Happy 4:20!!`;
