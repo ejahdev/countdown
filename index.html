@@ -45,7 +45,7 @@ function updateCountdown() {
   target.setHours(4, 20, 0, 0);
 
   // If it's already past 4:21 AM, calculate the time for 4:20 PM today
-  if (currentHour > 4 || (currentHour === 4 && currentMinute >= 21)) {
+  if (currentHour > 4 || (currentHour === 4 && currentMinute >= 20)) {
     target.setHours(16, 20, 0, 0);
   }
 
