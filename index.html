@@ -40,27 +40,25 @@
       const currentHour = now.getHours();
       const currentMinute = now.getMinutes();
       
-      const target = new Date();
-      let isAM = true;
+      const targetTimeAM = new Date(now);
+      targetTimeAM.setHours(4, 20, 0, 0);
       
-      if (currentHour >= 16 || (currentHour === 16 && currentMinute >= 20)) {
-        // If it's past 4:20 PM, set the next 4:20 to 4:20 AM of the next day
-        target.setDate(target.getDate() + 1);
-        isAM = true;
-      } else {
-        // If it's before 4:20 PM, set the next 4:20 to 4:20 PM of the same day
-        isAM = false;
-      }
-      target.setHours(isAM ? 4 : 16, 20, 0, 0);
+      const targetTimePM = new Date(now);
+      targetTimePM.setHours(16, 20, 0, 0);
 
-      const timeDifference = target - now;
+      let targetTime = targetTimeAM;
+      let ampm = "AM";
 
-      if (timeDifference <= 0) {
-        // If it's already past the next 4:20, set the next one to the following day
-        target.setDate(target.getDate() + 1);
-        target.setHours(4, 20, 0, 0);
-        timeDifference = target - now;
+      if (now >= targetTimePM) {
+        targetTime = targetTimeAM;
+        ampm = "AM";
+        targetTime.setDate(targetTime.getDate() + 1); // Next day's AM
+      } else if (now >= targetTimeAM) {
+        targetTime = targetTimePM;
+        ampm = "PM";
       }
+
+      const timeDifference = targetTime - now;
 
       const hours = Math.floor(timeDifference / (1000 * 60 * 60));
       const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
@@ -84,14 +82,14 @@
         countdownText += `<span class="purple">${seconds}</span> Second${seconds === 1 ? "" : "s"}`;
       }
 
-      let ampm = isAM ? "AM" : "PM";
-
       countdownText += ` <br>until west coast <span class='green'>4:20</span> ${ampm}!`;
       document.getElementById("countdown").innerHTML = countdownText;
-
-      setTimeout(updateCountdown, 1000);
     }
 
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+
+    // Initial update
     updateCountdown();
   </script>
 </body>
