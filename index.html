@@ -79,9 +79,9 @@
           countdownText += `<span class="purple">${seconds}</span> Second${seconds === 1 ? "" : "s"}`;
         }
 
-        let ampm = "AM";
-        if (currentHour > 16 || (currentHour === 16 && currentMinute >= 20)) {
-          ampm = "PM";
+        let ampm = currentHour >= 12 ? "PM" : "AM";
+        if ((currentHour >= 4 && currentMinute >= 20) || currentHour >= 16) {
+          ampm = "AM";
         }
         countdownText += ` <br>until west coast <span class='green'>4:20</span> ${ampm}!!`;
         document.getElementById("countdown").innerHTML = countdownText;
