@@ -37,22 +37,25 @@
   <script>
     function updateCountdown() {
       const now = new Date();
-      const target = new Date();
       const currentHour = now.getHours();
       const currentMinute = now.getMinutes();
 
-      if (currentHour > 16 || (currentHour === 16 && currentMinute >= 20)) {
-        target.setHours(4, 20, 0, 0); // Set target time to 4:20 AM of the next day
+      const next4_20 = new Date();
+      if ((currentHour > 16) || (currentHour === 16 && currentMinute >= 20)) {
+        // If it's past 4:20 PM, set the next 4:20 to 4:20 AM of the next day
+        next4_20.setDate(now.getDate() + 1);
+        next4_20.setHours(4, 20, 0, 0);
       } else {
-        target.setHours(16, 20, 0, 0); // Set target time to 4:20 PM of the same day
+        // If it's before 4:20 PM, set the next 4:20 to 4:20 PM of the same day
+        next4_20.setHours(16, 20, 0, 0);
       }
 
-      const timeDifference = target - now;
+      const timeDifference = next4_20 - now;
 
       if (timeDifference <= 0) {
         document.getElementById("countdown").innerHTML = "Cheers Happy 4:20!";
-        // Reset the countdown for the next target time
-        setTimeout(updateCountdown, 1000); // Check every second for a reset
+        // Reset the countdown for the next 4:20
+        setTimeout(updateCountdown, 60000); // Check every minute
       } else {
         const hours = Math.floor(timeDifference / (1000 * 60 * 60));
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
@@ -76,9 +79,9 @@
           countdownText += `<span class="purple">${seconds}</span> Second${seconds === 1 ? "" : "s"}`;
         }
 
-        let ampm = "AM"; // Default to AM
+        let ampm = "AM";
         if (currentHour > 16 || (currentHour === 16 && currentMinute >= 20)) {
-          ampm = "PM"; // Change to PM after 4:20
+          ampm = "PM";
         }
         countdownText += ` <br>until west coast <span class='green'>4:20</span> ${ampm}!!`;
         document.getElementById("countdown").innerHTML = countdownText;
